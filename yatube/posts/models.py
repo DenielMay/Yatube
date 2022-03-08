@@ -41,8 +41,8 @@ class Post(models.Model):
         help_text='Укажите группу для публикации',
         verbose_name='Группа')
     image = models.ImageField(
-        'Картинка',
         upload_to='posts/',
+        verbose_name='Картинка',
         blank=True)
 
     class Meta:
