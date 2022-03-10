@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 
 from .forms import PostForm, CommentForm
-from .models import Post, Group, User, Follow
+from .models import Post, Group, User, Follow, Comment
 from django.shortcuts import render, get_object_or_404, redirect
 from django.core.paginator import Paginator
 
@@ -24,9 +24,8 @@ def index(request):
 def group_posts(request, slug):
     template = 'posts/group_list.html'
     group = get_object_or_404(
-        Group.objects.prefetch_related("posts", "author", "comments"),
-        slug=slug)
-    posts = group.posts.all()[:POSTS_PER_PAGE]
+        Group.objects.prefetch_related("posts"), slug=slug)
+    posts = group.posts.all()
     paginator = Paginator(posts, POSTS_PER_PAGE)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
